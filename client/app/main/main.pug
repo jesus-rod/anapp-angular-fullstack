@@ -1,0 +1,80 @@
+div#fullScreen(ng-show="fullScreenEnabled")
+  div#closeFullScreen
+    button.btn.btn-default(ng-click='$ctrl.closeFullScreen()')  Cerrar
+  div#fullSizedImage
+    img(ng-src='/api/media?path={{currentFullScreenImage}}')
+  div#bottomRow
+    | ok
+
+header#banner.hero-unit
+  .container
+    h1 La asamblea en tus manos
+    p.lead plataforma de comunicación ciudadana
+    img(src='assets/images/logo.jpg', class="img-rounded" alt='Asamblea Nacional de Venezuela')
+
+.container
+  .row
+    br
+    #denunciaContainer.col-lg-4.col-xs-12
+      #divOverlay(ng-hide='$ctrl.isLoggedIn()')
+        p.overlayText Debes estar registrado para poder hacer propuesas y denuncias! <br /><br />
+          button.btn.btn-lg.btn-default(ui-sref='signup') Registrate
+
+
+
+      h3.event-creation-header Envia tu propuesta o denuncia
+      form.thing-form
+      p.text-right
+        span.label.label-success(ng-show='$ctrl.newThingFeatures.typeFlag == 1')
+          | Propuesta
+        span.label.label-danger(ng-show='$ctrl.newThingFeatures.typeFlag == 2')
+          | Denuncia
+        |&nbsp;
+        span.label.label-default
+          | {{400 - $ctrl.newThing.length}}
+      textarea#textArea.form-control(maxlength=400, placeholder='Describe tu denuncia o propuesta (hasta 400 caracteres)', ng-model='$ctrl.newThing')
+      #tipo-evento.btn-group.btn-group-justified(role="group")
+        .btn-group(role="group")
+          button.btn.btn-default(type='button', ng-click='$ctrl.addType(1)') Propuesta &nbsp;&nbsp;
+            i.fa.fa-hand-paper-o(aria-hidden="true")
+        .btn-group(role="group")
+          button.btn.btn-default(type='button', ng-click='$ctrl.addType(2)') Denuncia &nbsp;&nbsp;
+            i.fa.fa-exclamation(aria-hidden="true")
+      div.text-center
+        img(height='250', ngf-src='$ctrl.image')
+      a#subir-button.btn.btn-default.form-control(accept='image/*', ngf-resize='{width: 450}',
+      ngf-select='', ng-model='$ctrl.image',
+      name='image', ngf-max-size='2MB', ngf-min-height='100') Sube una foto (opcional)
+
+      button#enviar-button.btn.btn-primary(type='submit', ng-click='$ctrl.addThing()') Publicar
+
+    #events-div.col-lg-8.col-xs-12
+      div.well
+        h1.events-section-header Últimas denuncias y propuestas:
+        ul.nav.nav-tabs.nav-stacked.event-box.no-padding(ng-repeat='thing in $ctrl.awesomeThings')
+          li
+              div.imgAndTextcontainer
+                div.event-imgContainer
+                  a(ng-click='$ctrl.fullScreen(thing.image)')
+                    img.event-img.img-rounded(width='150', ng-src='/api/media?path={{thing.image}}')
+                div.event-text
+                  | {{thing.name}}
+                div.event-close
+                  button.close(type='button', ng-click='$ctrl.deleteThing(thing)') &times;
+              div.event-details
+                  span.label.label-success(ng-show='thing.type == 1')
+                    | Propuesta
+                  span.label.label-danger(ng-show='thing.type == 2')
+                    | Denuncia
+                  span
+                    b
+                      | &nbsp;&nbsp; publicada por {{thing.postedBy.name}}
+                      | el {{thing.createdAt | date: "dd/MM/yyyy \'a las\' h:mma"}}
+
+
+
+
+
+  br
+  br
+  br
