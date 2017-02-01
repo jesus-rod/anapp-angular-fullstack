@@ -10,6 +10,7 @@ import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
 
 import ngFileUpload from 'ng-file-upload';
+import ngInfiniteScroll from 'ng-infinite-scroll';
 // import ngMessages from 'angular-messages';
 // import ngValidationMatch from 'angular-validation-match';
 
@@ -31,7 +32,8 @@ import socket from '../components/socket/socket.service';
 import './app.scss';
 
 angular.module('anppApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
-  uiBootstrap, _Auth, account, admin, navbar, footer, main, constants, socket, util, ngFileUpload
+  uiBootstrap, _Auth, account, admin, navbar, footer, main, constants, socket, util,
+  ngFileUpload, ngInfiniteScroll
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

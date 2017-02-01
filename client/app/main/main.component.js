@@ -12,7 +12,7 @@ export class MainController {
   isLoggedIn: Function;
   getCurrentUser: Function;
   /*@ngInject*/
-  constructor($http, $scope, socket, Upload, Auth) {
+  constructor($http, $scope, socket, Upload, Auth, $timeout) {
     this.$http = $http;
     this.socket = socket;
     this.Upload = Upload;
@@ -20,6 +20,10 @@ export class MainController {
     this.isLoggedIn = Auth.isLoggedInSync;
     this.$scope = $scope;
     this.getCurrentUser = Auth.getCurrentUserSync;
+    this.busy = false;
+    this.items = [];
+    this.page = 0;
+    this.timeout = $timeout;
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
@@ -28,11 +32,30 @@ export class MainController {
 
   $onInit() {
 
-    this.$http.get('/api/things')
+    // this.$http.get('/api/things')
+    //   .then(response => {
+    //     console.log(response);
+    //     this.items = response.data;
+    //     this.socket.syncUpdates('thing', this.items);
+    //   });
+  }
+  nextPage(){
+    if (this.busy) return;
+    this.busy = true;
+    this.$http.get('/api/things/page?page='+this.page)
       .then(response => {
-        console.log(response);
-        this.awesomeThings = response.data;
-        this.socket.syncUpdates('thing', this.awesomeThings);
+        console.log(response.data);
+        if(response.data.length){
+          this.busy = false;
+          this.page++;
+          this.items = this.items.concat(response.data);
+        }else{
+          this.busy = true;
+          this.timeout(()=>{
+            this.busy = false;
+          },2000);
+        }
+        console.log('this.items', this.items)
       });
   }
 
@@ -48,9 +71,20 @@ export class MainController {
           type: this.newThingFeatures.typeFlag,
           image: response.data.path,
           postedBy: this.getCurrentUser()._id
+        }).then((response) => {
+          console.log("-->", this.newThing);
+          console.log("-->", response.data);
+          response.data.postedBy = {
+            name: this.getCurrentUser().name
+          };
+          this.items.splice(0, 0, response.data);
+
+          console.log("items -->", this.items);
+          // this.socket.syncUpdates('thing', this.items);
         }).finally(()=>{
           this.newThing = '';
           this.image = {};
+
         });
       }).catch( err=>{
         console('err', err);
@@ -61,6 +95,7 @@ export class MainController {
 
   deleteThing(thing) {
     this.$http.delete(`/api/things/${thing._id}`);
+    this.socket.syncUpdates('thing', this.items);
   }
 
   addType(typeFlag) {
@@ -75,16 +110,12 @@ export class MainController {
 
   ///api/media?path=default-no-image.jpg
   fullScreen(imgRoute) {
-    console.log(this.getCurrentUser()._id);
-    console.log(imgRoute);
     this.$scope.currentFullScreenImage = imgRoute;
     this.$scope.fullScreenEnabled = true;
-    console.log("fullscreen habilitado");
   }
 
   closeFullScreen(){
     this.$scope.fullScreenEnabled = false;
-    console.log("fullscreen deshabilitado");
   }
 
 }

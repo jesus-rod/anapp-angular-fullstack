@@ -7,10 +7,11 @@ import * as auth from '../../auth/auth.service';
 var router = express.Router();
 
 router.get('/', controller.index);
+router.get('/page', controller.page);
 router.get('/:id', controller.show);
 router.post('/', auth.isAuthenticated(), controller.create);
 router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
-router.delete('/:id', controller.destroy);
+router.delete('/:id', auth.hasRole('admin') , controller.destroy);
 
 module.exports = router;

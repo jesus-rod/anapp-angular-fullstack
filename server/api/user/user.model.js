@@ -142,7 +142,7 @@ UserSchema
       .catch(function(err) {
         throw err;
       });
-  }, 'The specified email address is already in use.');
+  }, 'El correo ingresado ya se encuentra en uso');
 
 var validatePresenceOf = function(value) {
   return value && value.length;

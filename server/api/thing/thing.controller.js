@@ -76,6 +76,19 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
+// Gets a list of Things
+export function page(req, res) {
+  console.log(req.query);
+  return Thing.find()
+    .populate('postedBy')
+    .sort({createdAt: 'descending'})
+    .skip(8*req.query.page)
+    .limit(8)
+    .exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 // Gets a single Thing from the DB
 export function show(req, res) {
   return Thing.findById(req.params.id).exec()
