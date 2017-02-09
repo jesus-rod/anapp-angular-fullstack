@@ -5,6 +5,7 @@
 'use strict';
 
 import express from 'express';
+import cors from 'cors';
 import favicon from 'serve-favicon';
 import morgan from 'morgan';
 import shrinkRay from 'shrink-ray';
@@ -23,6 +24,9 @@ var MongoStore = connectMongo(session);
 
 export default function(app) {
   var env = app.get('env');
+
+  app.use(cors());
+  app.options('*', cors()); //
 
   if(env === 'development' || env === 'test') {
     app.use(express.static(path.join(config.root, '.tmp')));
@@ -63,20 +67,20 @@ export default function(app) {
    * Lusca - express server security
    * https://github.com/krakenjs/lusca
    */
-  if(env !== 'test' && !process.env.SAUCE_USERNAME) {
-    app.use(lusca({
-      csrf: {
-        angular: true
-      },
-      xframe: 'SAMEORIGIN',
-      hsts: {
-        maxAge: 31536000, //1 year, in seconds
-        includeSubDomains: true,
-        preload: true
-      },
-      xssProtection: true
-    }));
-  }
+  // if(env !== 'test' && !process.env.SAUCE_USERNAME) {
+  //   app.use(lusca({
+  //     // csrf: {
+  //     //   angular: true
+  //     // },
+  //     xframe: 'SAMEORIGIN',
+  //     hsts: {
+  //       maxAge: 31536000, //1 year, in seconds
+  //       includeSubDomains: true,
+  //       preload: true
+  //     },
+  //     xssProtection: true
+  //   }));
+  // }
 
   if(env === 'development') {
     const webpackDevMiddleware = require('webpack-dev-middleware');

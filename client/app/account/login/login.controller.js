@@ -30,7 +30,7 @@ export default class LoginController {
     this.submitted = true;
 
     if(form.$valid) {
-      this.Auth.login({
+        this.Auth.login({
         email: this.user.email,
         password: this.user.password
       })

@@ -68,9 +68,7 @@ export function index(req, res) {
   console.log(req);
   return Thing.find()
     .populate('postedBy')
-    .find({'postedBy.name' : req.id})
     .sort({createdAt: 'descending'})
-    .limit(5)
     .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -91,7 +89,9 @@ export function page(req, res) {
 
 // Gets a single Thing from the DB
 export function show(req, res) {
-  return Thing.findById(req.params.id).exec()
+  return Thing.findById(req.params.id)
+    .populate('postedBy')
+    .exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));

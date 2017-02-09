@@ -51,7 +51,8 @@
     "socket.io": "^1.3.5",
     "socket.io-client": "^1.3.5",
     "socketio-jwt": "^4.2.0",
-    "sprint-js": "~0.1.0"
+    "sprint-js": "~0.1.0",
+    "cors": "^2.5.1"
   },
   "devDependencies": {
     "angular-file-upload": "^2.4.1",

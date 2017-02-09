@@ -1,12 +1,15 @@
 'use strict';
 
-var express = require('express');
+var express = require('express'),
+  cors = require('cors')
+  ,app = express();
 var controller = require('./thing.controller');
 import * as auth from '../../auth/auth.service';
 
 var router = express.Router();
 
-router.get('/', controller.index);
+
+router.get('/', cors(), controller.index);
 router.get('/page', controller.page);
 router.get('/:id', controller.show);
 router.post('/', auth.isAuthenticated(), controller.create);

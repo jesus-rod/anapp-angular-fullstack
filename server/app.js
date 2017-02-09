@@ -23,7 +23,9 @@ if(config.seedDB) {
 }
 
 // Setup server
+var cors = require('cors');
 var app = express();
+
 var server = http.createServer(app);
 var socketio = require('socket.io')(server, {
   serveClient: config.env !== 'production',
