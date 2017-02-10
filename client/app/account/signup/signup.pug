@@ -32,9 +32,9 @@
           label Email
           input.form-control(type='email', name='email', ng-model='vm.user.email', required='', mongoose-error='')
           p.help-block(ng-show='form.email.$error.email && vm.submitted')
-            | Doesn't look like a valid email.
+            | Email invalido
           p.help-block(ng-show='form.email.$error.required && vm.submitted')
-            | What's your email address?
+            | Inserta tu email
           p.help-block(ng-show='form.email.$error.mongoose')
             | {{ vm.errors.email }}
 
@@ -48,7 +48,7 @@
             ng-minlength='3', required='')
 
           p.help-block(ng-show='(form.password.$error.minlength || form.password.$error.required) && vm.submitted')
-            | Password must be at least 3 characters.
+            | La contraseña debe ser mas larga
           p.help-block(ng-show='form.password.$error.mongoose')
             | {{ vm.errors.password }}
 
@@ -61,7 +61,7 @@
             match="vm.user.password"
             ng-minlength='3', required='')
           p.help-block(ng-show='form.confirmPassword.$error.match && vm.submitted')
-            | Passwords must match.
+            | Las contraseñas deben ser iguales
 
         hr
         div.text-right

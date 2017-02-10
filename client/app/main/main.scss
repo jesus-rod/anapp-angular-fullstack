@@ -1,4 +1,4 @@
-$primary-color: #012D5E;
+$primary-color: #626262;
 $no-padding: 0px !important;
 $no-margin: 0px !important;
 $width100: 100% !important;
@@ -18,8 +18,8 @@ body, html {
   margin: $no-margin;
   padding: $no-padding;
   margin-bottom: 20px !important;
-  padding-right: 5px !important;
-  padding-left: 20px !important;
+  //padding-right: 5px !important;
+  //padding-left: 20px !important;
 }
 
 #divOverlay{
@@ -35,7 +35,8 @@ body, html {
   cursor: not-allowed;
   padding-bottom: 10px;
   padding-top: 10px !important;
-  margin-left: -10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .overlayText {
@@ -136,6 +137,7 @@ body, html {
   align-self: center;
   flex-grow: 2;
   text-align: justify;
+  padding-top: 20px;
   padding-left: 10px;
   padding-right: 15px;
 }
@@ -143,6 +145,8 @@ body, html {
   display: flex;
   width: 100%;
   flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
 }
 .event-imgContainer{
   width: 160px;
@@ -203,4 +207,19 @@ body, html {
 #textArea {
   height: 160px;
   resize: none;
+}
+
+#main-logo{
+  max-width: 90%;
+  min-width: 200px;
+}
+
+
+@media (max-width: 780px) {
+  #main-title {
+    font-size: 30px !important;
+  }
+  .events-section-header{
+    font-size: 20px !important;
+  }
 }
