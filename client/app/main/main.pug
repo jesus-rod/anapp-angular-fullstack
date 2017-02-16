@@ -17,7 +17,7 @@ header#banner.hero-unit
     br
     #denunciaContainer.col-lg-4.col-xs-12
       #divOverlay(ng-hide='$ctrl.isLoggedIn()')
-        p.overlayText Debes estar registrado para poder hacer propuesas y denuncias! <br /><br />
+        p.overlayText Debes estar registrado para poder hacer propuestas y denuncias! <br /><br />
           button.btn.btn-lg.btn-default(ui-sref='signup') Registrate
 
 
@@ -69,7 +69,7 @@ header#banner.hero-unit
                       | Denuncia
                     span
                       b
-                        | &nbsp;&nbsp; publicada por {{thing.postedBy.name}}
+                        | &nbsp;&nbsp; publicada por {{thing.postedBy.name}} {{thing.postedBy.lastname}}
                         | el {{thing.createdAt | date: "dd/MM/yyyy \'a las\' h:mma"}}
 
 

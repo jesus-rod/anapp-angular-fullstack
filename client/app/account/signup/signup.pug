@@ -6,75 +6,80 @@
       h1 Crear usuario
       hr
       form.form(name='form', ng-submit='vm.register(form)', novalidate='')
-        .form-group(ng-class='{ "has-success": form.name.$valid && vm.submitted,\
-        "has-error": form.name.$invalid && vm.submitted }')
-          label Nombre
-          input.form-control(type='text', name='name', ng-model='vm.user.name', required='')
-          p.help-block(ng-show='form.name.$error.required && vm.submitted')
-            | Nombre es obligatorio
+        .col-md-6
+          .form-group(ng-class='{ "has-success": form.name.$valid && vm.submitted,\
+          "has-error": form.name.$invalid && vm.submitted }')
+            label Nombre
+            input.form-control(type='text', name='name', ng-model='vm.user.name', required='')
+            p.help-block(ng-show='form.name.$error.required && vm.submitted')
+              | Nombre es obligatorio
 
-        .form-group(ng-class='{ "has-success": form.lastname.$valid && vm.submitted,\
-          "has-error": form.lastname.$invalid && vm.submitted }')
-          label Apellido
-          input.form-control(type='text', name='lastname', ng-model='vm.user.lastname', required='')
-          p.help-block(ng-show='form.lastname.$error.required && vm.submitted')
-            | Apellido es obligatorio
+        .col-md-6
+          .form-group(ng-class='{ "has-success": form.lastname.$valid && vm.submitted,\
+            "has-error": form.lastname.$invalid && vm.submitted }')
+            label Apellido
+            input.form-control(type='text', name='lastname', ng-model='vm.user.lastname', required='')
+            p.help-block(ng-show='form.lastname.$error.required && vm.submitted')
+              | Apellido es obligatorio
 
-        .form-group(ng-class='{ "has-sucess": form.cedula.$valid && vm.submitted,\
-          "has-error": form.cedula.$invalid && vm.submitted }')
-          label Cedula de Identidad
-          input.form-control(type='text', name='cedula', ng-model='vm.user.cedula', required='', mongoose-error='')
-          p.help-block(ng-show='form.cedula.$error.required && vm.submitted')
-            | Numero de cedula obligatorio
+        .col-md-6
+          .form-group(ng-class='{ "has-sucess": form.cedula.$valid && vm.submitted,\
+            "has-error": form.cedula.$invalid && vm.submitted }')
+            .row-fluid
+              label Cedula de Identidad
+            .row
+              .col-md-4
+                select.form-control(name='nacionalidad', ng-model='vm.user.nacionalidad')
+                  option(value='v')
+                    | V
+                  option(value='e')
+                    | E
+              .col-md-8
+                input.form-control(type='number', name='cedula', ng-model='vm.user.cedula', required='', mongoose-error='')
+                p.help-block(ng-show='form.cedula.$error.required && vm.submitted')
+                  | Numero de cedula obligatorio
 
-        .form-group(ng-class='{ "has-success": form.email.$valid && vm.submitted,\
-        "has-error": form.email.$invalid && vm.submitted }')
-          label Email
-          input.form-control(type='email', name='email', ng-model='vm.user.email', required='', mongoose-error='')
-          p.help-block(ng-show='form.email.$error.email && vm.submitted')
-            | Email invalido
-          p.help-block(ng-show='form.email.$error.required && vm.submitted')
-            | Inserta tu email
-          p.help-block(ng-show='form.email.$error.mongoose')
-            | {{ vm.errors.email }}
+        .col-md-6
+          .form-group(ng-class='{ "has-success": form.email.$valid && vm.submitted,\
+          "has-error": form.email.$invalid && vm.submitted }')
+            label Email
+            input.form-control(type='email', name='email', ng-model='vm.user.email', required='', mongoose-error='')
+            p.help-block(ng-show='form.email.$error.email && vm.submitted')
+              | Email invalido
+            p.help-block(ng-show='form.email.$error.required && vm.submitted')
+              | Inserta tu email
+            p.help-block(ng-show='form.email.$error.mongoose')
+              | {{ vm.errors.email }}
 
-        .form-group(ng-class='{ "has-success": form.password.$valid && vm.submitted,\
-        "has-error": form.password.$invalid && vm.submitted }')
-          label Clave de acceso
-          input.form-control(type='password'
-            name='password'
-            ng-model='vm.user.password'
-            mongoose-error=''
-            ng-minlength='3', required='')
+        .col-md-6
+          .form-group(ng-class='{ "has-success": form.password.$valid && vm.submitted,\
+          "has-error": form.password.$invalid && vm.submitted }')
+            label Clave de acceso
+            input.form-control(type='password'
+              name='password'
+              ng-model='vm.user.password'
+              mongoose-error=''
+              ng-minlength='3', required='')
 
-          p.help-block(ng-show='(form.password.$error.minlength || form.password.$error.required) && vm.submitted')
-            | La contraseña debe ser mas larga
-          p.help-block(ng-show='form.password.$error.mongoose')
-            | {{ vm.errors.password }}
+            p.help-block(ng-show='(form.password.$error.minlength || form.password.$error.required) && vm.submitted')
+              | La contraseña debe ser mas larga
+            p.help-block(ng-show='form.password.$error.mongoose')
+              | {{ vm.errors.password }}
 
-        .form-group(ng-class='{ "has-success": form.confirmPassword.$valid && vm.submitted,\
-        "has-error": form.confirmPassword.$invalid && vm.submitted }')
-          label Confirmar clave de acceso
-          input.form-control(type='password'
-            name='confirmPassword'
-            ng-model='vm.user.confirmPassword'
-            match="vm.user.password"
-            ng-minlength='3', required='')
-          p.help-block(ng-show='form.confirmPassword.$error.match && vm.submitted')
-            | Las contraseñas deben ser iguales
+        .col-md-6
+          .form-group(ng-class='{ "has-success": form.confirmPassword.$valid && vm.submitted,\
+          "has-error": form.confirmPassword.$invalid && vm.submitted }')
+            label Confirmar clave de acceso
+            input.form-control(type='password'
+              name='confirmPassword'
+              ng-model='vm.user.confirmPassword'
+              match="vm.user.password"
+              ng-minlength='3', required='')
+            p.help-block(ng-show='form.confirmPassword.$error.match && vm.submitted')
+              | Las contraseñas deben ser iguales
 
         hr
         div.text-right
           button.btn.btn-primary.btn-lg.btn-register(type='submit')
             | Enviar
-          = ' '
-          //a.btn.btn-default.btn-lg.btn-login(ui-sref='login')
-          //  | Login
-
         hr
-
-  //      .row
-  //        .col-sm-4.col-md-3
-  //          oauth-buttons(classes='btn-block')
-  //
-  //hr

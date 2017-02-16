@@ -5,6 +5,7 @@ mongoose.Promise = require('bluebird');
 import mongoose, {Schema} from 'mongoose';
 
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
+const prefijoCedula = ['v', 'e'];
 
 var UserSchema = new Schema({
   name: String,
@@ -19,7 +20,15 @@ var UserSchema = new Schema({
       }
     }
   },
-  cedula: String,
+  nacionalidad: {
+    type: String,
+    enum: ['v', 'e'],
+    required: true,
+  },
+  cedula: {
+    type: Number,
+    required: true
+  },
   email: {
     type: String,
     lowercase: true,
@@ -62,7 +71,9 @@ UserSchema
     return {
       name: this.name,
       lastname: this.lastname,
+      nacionalidad: this.nacionalidad,
       cedula: this.cedula,
+      email: this.email,
       role: this.role
     };
   });
