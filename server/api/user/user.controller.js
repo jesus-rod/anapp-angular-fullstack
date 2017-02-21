@@ -37,6 +37,9 @@ export function create(req, res) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
+  console.log(req.body);
+  newUser.name = req.body.name.toUpperCase();
+  newUser.lastname = req.body.lastname.toUpperCase();
   newUser.save()
     .then(function(user) {
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {

@@ -65,7 +65,9 @@ function handleError(res, statusCode) {
 
 // Gets a list of Estadoss
 export function index(req, res) {
-  return Estados.find().exec()
+  return Estados.find()
+    .populate('parroquiasOwned')
+    .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

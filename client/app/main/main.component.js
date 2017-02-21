@@ -10,6 +10,7 @@ export class MainController {
   newThing = '';
   newThingFeatures = {};
   isLoggedIn: Function;
+  isAdmin: Function;
   getCurrentUser: Function;
   /*@ngInject*/
   constructor($http, $scope, socket, Upload, Auth, $timeout) {
@@ -19,6 +20,7 @@ export class MainController {
     this.newThingFeatures.typeFlag = 1;
     this.isLoggedIn = Auth.isLoggedInSync;
     this.$scope = $scope;
+    this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
     this.busy = false;
     this.items = [];

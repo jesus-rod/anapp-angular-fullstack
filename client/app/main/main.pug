@@ -68,6 +68,12 @@ header#banner.hero-unit
                     span.label.label-danger(ng-show='thing.type == 2')
                       | Denuncia
                     span
+                      | &nbsp;
+                    span.label.label-info.capitalize
+                        |{{thing.postedBy.estado.name | lowercase }}
+                        | - Parroquia {{thing.postedBy.parroquia.name | lowercase }}
+                    span
+                      br
                       b
                         | &nbsp;&nbsp; publicada por {{thing.postedBy.name}} {{thing.postedBy.lastname}}
                         | el {{thing.createdAt | date: "dd/MM/yyyy \'a las\' h:mma"}}

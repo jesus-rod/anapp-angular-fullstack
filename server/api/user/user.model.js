@@ -5,13 +5,22 @@ mongoose.Promise = require('bluebird');
 import mongoose, {Schema} from 'mongoose';
 
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
-const prefijoCedula = ['v', 'e'];
 
 var UserSchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    uppercase: true,
+    required() {
+      if(authTypes.indexOf(this.provider) === -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
   lastname: {
     type: String,
-    lowercase: true,
+    uppercase: true,
     required() {
       if(authTypes.indexOf(this.provider) === -1) {
         return true;
@@ -53,6 +62,14 @@ var UserSchema = new Schema({
         return false;
       }
     }
+  },
+  estado: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Estados'
+  },
+  parroquia: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Parroquia'
   },
   provider: String,
   salt: String,
@@ -121,6 +138,27 @@ UserSchema
     }
     return lastname.length;
   }, 'Introducir un apellido es obligatorio');
+
+//validate empty estado
+UserSchema
+  .path('estado')
+  .validate(function(estado) {
+    if(authTypes.indexOf(this.provider) !== -1) {
+      return true;
+    }
+    return estado.length;
+  }, 'Estado cannot be blank');
+
+//validate empty parroquia
+
+UserSchema
+  .path('parroquia')
+  .validate(function(parroquia) {
+    if(authTypes.indexOf(this.provider) !== -1) {
+      return true;
+    }
+    return parroquia.length;
+  }, 'Parroquia cannot be blank');
 
 // Validate empty password
 UserSchema

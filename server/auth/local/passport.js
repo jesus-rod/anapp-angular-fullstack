@@ -8,7 +8,7 @@ function localAuthenticate(User, email, password, done) {
     .then(user => {
       if(!user) {
         return done(null, false, {
-          message: 'This email is not registered.'
+          message: 'Este correo no se encuentra registrado en el sistema.'
         });
       }
       user.authenticate(password, function(authError, authenticated) {
