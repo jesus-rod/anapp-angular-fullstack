@@ -67,7 +67,17 @@ function handleError(res, statusCode) {
 export function index(req, res) {
   console.log(req);
   return Thing.find()
-    .populate('postedBy')
+    .populate({
+      path: 'postedBy',
+      populate: [{
+        path: 'estado',
+        model: 'Estados'
+      },
+      {
+        path: 'parroquia',
+        model: 'Parroquia'
+      }]
+    })
     .sort({createdAt: 'descending'})
     .exec()
     .then(respondWithResult(res))
