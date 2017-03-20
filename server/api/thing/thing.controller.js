@@ -119,6 +119,8 @@ export function show(req, res) {
 
 // Creates a new Thing in the DB
 export function create(req, res) {
+  let userId = req.user._id;
+  req.body.postedBy = userId;
   return Thing.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
