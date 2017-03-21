@@ -126,7 +126,17 @@ export function create(req, res) {
     .then(function(res) {
       console.log("created id", res._id);
       return Thing.findById(res._id)
-      .populate('postedBy')
+      .populate({
+      path: 'postedBy',
+      populate: [{
+        path: 'estado',
+        model: 'Estados'
+      },
+      {
+        path: 'parroquia',
+        model: 'Parroquia'
+      }]
+    })
       .exec()
     })
     .then(respondWithResult(res, 201))
