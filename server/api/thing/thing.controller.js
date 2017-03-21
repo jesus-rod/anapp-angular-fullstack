@@ -121,7 +121,7 @@ export function show(req, res) {
 export function create(req, res) {
   let userId = req.user._id;
   req.body.postedBy = userId;
-  return Thing.create(req.body)
+  return Thing.create(req.body).populate('postedBy')
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
