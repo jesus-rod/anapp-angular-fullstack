@@ -117,11 +117,18 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
+//
 // Creates a new Thing in the DB
 export function create(req, res) {
   let userId = req.user._id;
   req.body.postedBy = userId;
-  return Thing.create(req.body).populate('postedBy')
+  return Thing.create(req.body)
+    .then(function(res) {
+      console.log("created id", res._id);
+      return Thing.findById(res._id)
+      .populate('postedBy')
+      .exec()
+    })
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
