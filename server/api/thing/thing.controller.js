@@ -71,7 +71,12 @@ export function index(req, res) {
       path: 'postedBy',
       populate: [{
         path: 'estado',
-        model: 'Estados'
+        model: 'Estados',
+        populate:[{
+          path: 'parroquiasOwned',
+          model: 'Parroquia'
+        }]
+
       },
       {
         path: 'parroquia',
@@ -92,7 +97,11 @@ export function page(req, res) {
       path: 'postedBy',
       populate: [{
         path: 'estado',
-        model: 'Estados'
+        model: 'Estados',
+        populate:[{
+          path: 'parroquiasOwned',
+          model: 'Parroquia'
+        }]
       },
       {
         path: 'parroquia',
@@ -130,7 +139,11 @@ export function create(req, res) {
       path: 'postedBy',
       populate: [{
         path: 'estado',
-        model: 'Estados'
+        model: 'Estados',
+        populate:[{
+          path: 'parroquiasOwned',
+          model: 'Parroquia'
+        }]
       },
       {
         path: 'parroquia',
