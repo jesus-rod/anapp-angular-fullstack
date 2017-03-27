@@ -16,6 +16,8 @@ div.navbar.navbar-default.navbar-static-top
 
         li(ng-show='$ctrl.isAdmin()', ui-sref-active='active')
           a(ui-sref='admin') Admin
+        li(ng-show='$ctrl.isDiputado()', ui-sref-active='active')
+          a(ui-sref='diputados') Area Diputados
 
       ul.nav.navbar-nav.navbar-right
         li(ng-hide='$ctrl.isLoggedIn()', ui-sref-active='active')
@@ -31,5 +33,5 @@ div.navbar.navbar-default.navbar-static-top
           a(ui-sref='settings')
             span.glyphicon.glyphicon-cog
 
-        li(ng-show='$ctrl.isLoggedIn()')
+        li(ng-show='ctrl.isLoggedIn()')
           a(ui-sref='logout') Salir

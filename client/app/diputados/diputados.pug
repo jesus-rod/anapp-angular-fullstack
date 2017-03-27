@@ -1,0 +1,57 @@
+div#fullScreen(ng-show="fullScreenEnabled")
+  div#closeFullScreen
+    button.btn.btn-default(ng-click='diputadosCtrl.closeFullScreen()')  Cerrar
+  div#fullSizedImage
+    img(ng-src='/api/media?path={{currentFullScreenImage}}')
+  div#bottomRow
+    | ok
+
+div.container
+    #agenda-div.col-xs-12
+    div.well
+        h2  Agregar evento a la Agenda
+        form.thing-form
+        
+        div.row
+          .col-md-7    
+            input.form-control(type="text", placeholder="Ingresa un titulo para este evento", ng-model='diputadosCtrl.newAgenda.title')
+          .col-md-5.text-center
+            label Escoge una fecha
+            datepicker(date-format="dd/MM/yyyy", date-min-limit='{{diputadosCtrl.minDate}}', date-set="{{diputadosCtrl.minDate.toString()}}")
+              input(ng-model="diputadosCtrl.pickerDate" type="text")
+        br
+        p.text-right
+            span.label.label-default
+            | {{500 - diputadosCtrl.newAgenda.content.length}}  
+        textarea#textArea.form-control(maxlength=500, placeholder='Describe el evento para la agenda (hasta 500 caracteres)', ng-model='diputadosCtrl.newAgenda.content')
+        br
+        button#enviar-button.btn.btn-primary(type='submit', ng-click='diputadosCtrl.addAgenda()') Publicar a la Agenda
+        p.text-right.text-danger(ng-show='diputadosCtrl.warning') Todos los campos son necesarios
+div.container
+    #events-div.col-xs-12
+      div.well
+        h2  Propuestas y Denuncias en tu Estado:
+          ul.nav.nav-tabs.nav-stacked.event-box.no-padding(ng-repeat='thing in diputadosCtrl.items')
+            li
+                div.imgAndTextcontainer
+                  div.event-imgContainer
+                    a(ng-click='diputadosCtrl.fullScreen(thing.image)')
+                      img.event-img.img-rounded(width='150', ng-src='/api/media?path={{thing.image}}')
+                  div.event-text
+                    | {{thing.name}}
+                div.event-details
+                    span.label.label-success(ng-show='thing.type == 1')
+                      | Propuesta
+                    span.label.label-danger(ng-show='thing.type == 2')
+                      | Denuncia
+                    span
+                      | &nbsp;
+                    span.label.label-info.capitalize
+                        |{{thing.postedBy.estado.name | lowercase }}
+                        | - Parroquia {{thing.postedBy.parroquia.name | lowercase }} 
+                    span
+                      br
+                      br
+                      b
+                        | &nbsp;&nbsp; publicada por {{thing.postedBy.name}} {{thing.postedBy.lastname}}
+                        | el {{thing.createdAt | date: "dd/MM/yyyy \'a las\' h:mma"}}

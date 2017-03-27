@@ -211,6 +211,20 @@ export function AuthService($location, $http, $cookies, $q, appConfig, Util, Use
       return Auth.hasRoleSync('admin');
     },
 
+
+    isDiputado() {
+      return Auth.hasRole(...[].concat.apply(['diputado'], arguments));
+    },
+
+     /**
+     * Check if a user is an diputado
+     *
+     * @return {Bool}
+     */
+    isDiputadoSync() {
+      return Auth.hasRoleSync('diputado');
+    },
+
     /**
      * Get auth token
      *

@@ -16,7 +16,7 @@ function localAuthenticate(User, email, password, done) {
           return done(authError);
         }
         if(!authenticated) {
-          return done(null, false, { message: 'This password is not correct.' });
+          return done(null, false, { message: 'Clave errada.' });
         } else {
           return done(null, user);
         }

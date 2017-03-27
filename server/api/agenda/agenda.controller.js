@@ -1,17 +1,17 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/things              ->  index
- * POST    /api/things              ->  create
- * GET     /api/things/:id          ->  show
- * PUT     /api/things/:id          ->  upsert
- * PATCH   /api/things/:id          ->  patch
- * DELETE  /api/things/:id          ->  destroy
+ * GET     /api/agendas              ->  index
+ * POST    /api/agendas              ->  create
+ * GET     /api/agendas/:id          ->  show
+ * PUT     /api/agendas/:id          ->  upsert
+ * PATCH   /api/agendas/:id          ->  patch
+ * DELETE  /api/agendas/:id          ->  destroy
  */
 
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import Thing from './thing.model';
+import Agenda from './agenda.model';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -63,11 +63,10 @@ function handleError(res, statusCode) {
   };
 }
 
-// Gets a list of Things
+// Gets a list of Agendas
 export function index(req, res) {
-  console.log(req);
-  return Thing.find()
-    .populate({
+  return Agenda.find()
+  .populate({
       path: 'postedBy',
       populate: [{
         path: 'estado',
@@ -89,133 +88,66 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
-// Gets a list of Things by state
-export function indexByState(req, res) {
-   let userState = req.user.estado
-   console.log("user state---", userState);
-  return Thing.find()
-    .populate({
-      path: 'postedBy',
-      populate: [{
-        path: 'estado',
-        model: 'Estados',
-        match: { _id: userState},
-        populate:[{
-          path: 'parroquiasOwned',
-          model: 'Parroquia'
-        }]
-
-      },
-      {
-        path: 'parroquia',
-        model: 'Parroquia'
-      }]
-    })
-    .sort({createdAt: 'descending'})
-    .exec(function (err, things) {
-      things = things.filter(function(thing){
-        return thing.postedBy.estado
-      })
-      res.json(things);
-    })
-    .catch(handleError(res));
-}
-
-// Gets a list of Things
-export function page(req, res) {
-  console.log(req.query);
-  return Thing.find()
-    .populate({
-      path: 'postedBy',
-      populate: [{
-        path: 'estado',
-        model: 'Estados',
-        populate:[{
-          path: 'parroquiasOwned',
-          model: 'Parroquia'
-        }]
-      },
-      {
-        path: 'parroquia',
-        model: 'Parroquia'
-      }]
-    })
-    .sort({createdAt: 'descending'})
-    .skip(8*req.query.page)
-    .limit(8)
-    .exec()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-
-// Gets a single Thing from the DB
+// Gets a single Agenda from the DB
 export function show(req, res) {
-  return Thing.findById(req.params.id)
-    .populate('postedBy')
+  return Agenda.findById(req.params.id)
+  .populate({
+      path: 'postedBy',
+      populate: [{
+        path: 'estado',
+        model: 'Estados',
+        populate:[{
+          path: 'parroquiasOwned',
+          model: 'Parroquia'
+        }]
+
+      },
+      {
+        path: 'parroquia',
+        model: 'Parroquia'
+      }]
+    })
+    .sort({createdAt: 'descending'})
     .exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-//
-// Creates a new Thing in the DB
+// Creates a new Agenda in the DB
 export function create(req, res) {
-  let userId = req.user._id;
-  req.body.postedBy = userId;
-  return Thing.create(req.body)
-    .then(function(res) {
-      console.log("created id", res._id);
-      return Thing.findById(res._id)
-      .populate({
-      path: 'postedBy',
-      populate: [{
-        path: 'estado',
-        model: 'Estados',
-        populate:[{
-          path: 'parroquiasOwned',
-          model: 'Parroquia'
-        }]
-      },
-      {
-        path: 'parroquia',
-        model: 'Parroquia'
-      }]
-    })
-      .exec()
-    })
+  return Agenda.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Upserts the given Thing in the DB at the specified ID
+// Upserts the given Agenda in the DB at the specified ID
 export function upsert(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-  return Thing.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  return Agenda.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
 
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Updates an existing Thing in the DB
+// Updates an existing Agenda in the DB
 export function patch(req, res) {
   if(req.body._id) {
     delete req.body._id;
   }
-  return Thing.findById(req.params.id).exec()
+  return Agenda.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(patchUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Deletes a Thing from the DB
+// Deletes a Agenda from the DB
 export function destroy(req, res) {
-  return Thing.findById(req.params.id).exec()
+  return Agenda.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
 }
-

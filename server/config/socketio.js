@@ -16,6 +16,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/agenda/agenda.socket').register(socket);
   require('../api/parroquia/parroquia.socket').register(socket);
   require('../api/estados/estados.socket').register(socket);
   require('../api/media/media.socket').register(socket);

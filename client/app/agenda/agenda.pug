@@ -1,0 +1,28 @@
+header#banner.hero-unit
+  .container
+    img(src='assets/images/logo.png', id="main-logo" class="img-rounded" alt='Asamblea Nacional de Venezuela')
+
+
+.container
+    .row
+    br
+    
+    #events-div.col-xs-12
+      p 
+      div.well     
+        h2  Ultimos eventos en la Agenda
+          ul.nav.nav-tabs.nav-stacked.event-box.no-padding(ng-repeat='thing in agendaCtrl.items')
+            li
+                div.imgAndTextcontainer
+                  div.event-text
+                    h2 {{thing.title}}
+                    p {{thing.content}}
+                div.event-details
+                    span
+                      | &nbsp;
+                    span.label.label-info.capitalize
+                        | {{thing.postedBy.name}} {{thing.postedBy.lastname}}
+                    span
+                        br
+                    span.label.label-success 
+                        | Fecha: {{thing.createdAt | date: "dd/MM/yyyy"}}

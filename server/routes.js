@@ -9,6 +9,7 @@ import path from 'path';
 
 export default function(app) {
   // Insert routes below
+  app.use('/api/agendas', require('./api/agenda'));
   app.use('/api/parroquias', require('./api/parroquia'));
   app.use('/api/estados', require('./api/estados'));
   app.use('/api/media', require('./api/media'));

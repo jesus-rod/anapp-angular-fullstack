@@ -3,6 +3,9 @@ $icon-font-path: '/assets/fonts/bootstrap/';
 @import '~bootstrap-social/bootstrap-social.scss';
 $fa-font-path: '/assets/fonts/font-awesome/';
 @import '~font-awesome/scss/font-awesome';
+@import '~angularjs-datepicker/src/css/angular-datepicker.css';
+@import '~sweetalert/dist/sweetalert.css';
+
 
 // @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,900|Roboto:300,500,700,900);
 
@@ -17,9 +20,244 @@ $fa-font-path: '/assets/fonts/font-awesome/';
   padding: 0.2em 0;
 }
 
+p {
+  font-size: 14px;
+  font-weight: normal;
+}
+ 
+$primary-color: #626262;
+$no-padding: 0px !important;
+$no-margin: 0px !important;
+$width100: 100% !important;
+
+body, html {
+  overflow-x: hidden;
+}
+
+.btn-primary {
+  background: $primary-color;
+}
+
+#containerOverlay{
+  position: relative;
+}
+#denunciaContainer{
+  margin: $no-margin;
+  padding: $no-padding;
+  margin-bottom: 20px !important;
+  //padding-right: 5px !important;
+  //padding-left: 20px !important;
+}
+
+#divOverlay{
+  position: absolute;
+  background: rgba(0,0,0, 0.5);
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: not-allowed;
+  padding-bottom: 10px;
+  padding-top: 10px !important;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.overlayText {
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  text-shadow: 1px 1px black;
+}
+
+.thing-form {
+  margin: 20px 0;
+}
+.thing-form textarea{
+  min-height: 120px;
+  resize: none;
+  margin-bottom: 10px;
+}
+#enviar-button {
+  width: $width100;
+  font-weight: bold;
+}
+#tipo-evento, #subir-button{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+#imagen-evento{
+  display: flex;
+  margin-bottom: 10px;
+}
+#imagen-evento label{
+  text-align: center;
+  align-self: center;
+  flex-grow: 1;
+}
+#imagen-evento input{
+  flex-grow: 2;
+}
+
+#banner {
+  border-bottom: none;
+  margin-top: -20px;
+}
+
+#banner h1 {
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.hero-unit {
+  position: relative;
+  padding: 30px 15px;
+  color: #F5F5F5;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  background: $primary-color;
+}
+
+.navbar-text {
+  margin-left: 15px;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+.no-margin{
+  margin: 0 !important;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.events-section-header{
+  margin-top: 40px;
+}
+.event-creation-header{
+  margin-top: 10px;
+}
+.event-close {
+}
+.event-box>li{
+  border-radius: 0 !important;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px;
+  padding: 10px;
+}
+.event-details{
+  align-self: flex-end;
+  text-align: right;
+}
+.event-type{
+  align-self: center;
+}
+.event-text{
+  align-self: center;
+  flex-grow: 2;
+  text-align: justify;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 15px;
+}
+.imgAndTextcontainer{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+}
+.event-imgContainer{
+  width: 160px;
+  align-self: flex-start;
+}
+.event-img{
+  cursor: zoom-in;
+}
+
+
+.cropArea {
+  background: #E4E4E4;
+  overflow: hidden;
+  width:500px;
+  height:350px;
+}
+
+#fullScreen{
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0,0,0, 0.8);
+  z-index: 999999999;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+#closeFullScreen {
+  width: 100%;
+  height: 20px;
+  color: white;
+  align-self: flex-start;
+  text-align: right;
+  margin: 40px;
+  margin-top: 20px;
+  //background: beige;
+}
+
+#fullSizedImage{
+  min-height: 300px;
+  max-width: 100%;
+  text-align: center;
+}
+#fullSizedImage img{
+  max-width: 80%;
+}
+
+#bottomRow{
+  //background: red;
+  height: 100px;
+  width: 100%;
+}
+
+#textArea {
+  height: 160px;
+  resize: none;
+}
+
+#main-logo{
+  max-width: 90%;
+  min-width: 200px;
+}
+
+
+@media (max-width: 780px) {
+  #main-title {
+    font-size: 30px !important;
+  }
+  .events-section-header{
+    font-size: 20px !important;
+  }
+}
+
+
 // Component styles are injected through gulp
 /* inject:scss */
 @import 'admin/admin';
+@import 'diputados/diputados';
+@import 'agenda/agenda';
 @import 'main/main';
 @import '../components/footer/footer';
 @import '../components/modal/modal';
