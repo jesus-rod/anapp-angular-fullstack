@@ -18,27 +18,32 @@ export class NavbarComponent {
   isDiputado: Function;
   getCurrentUser: Function;
   isCollapsed = true;
-
   constructor(Auth) {
     'ngInject';
 
+    this.Auth = Auth;
     this.isLoggedIn = Auth.isLoggedInSync;
-    this.isAdmin = Auth.isAdminSync;
-
-    if (this.isAdmin)
-      console.log("es admin");
-    else
-      console.log("no es admin");  
-
-    //check if diputado  
-    this.isDiputado = Auth.isDiputadoSync;
-    if (Auth.isDiputadoSync) 
-      console.log("es diputado?");
-
-
+    this.isAdmin = false;
+    //get current user
     this.getCurrentUser = Auth.getCurrentUserSync;
+    this.isDiputado = false
+    
+    
+    if (this.Auth.getCurrentUser().then(response => {
+      console.log("rol es", response.role);
+      switch (response.role){
+        case "diputado":
+          this.isDiputado = true;
+          break;
+        case "admin":
+          this.isAdmin = true;
+          break;
+        default:
+          break;
+      }
+      return response.role
+    }));
   }
-
 }
 
 export default angular.module('directives.navbar', [])

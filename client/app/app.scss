@@ -256,8 +256,8 @@ body, html {
 // Component styles are injected through gulp
 /* inject:scss */
 @import 'admin/admin';
-@import 'diputados/diputados';
 @import 'agenda/agenda';
+@import 'diputados/diputados';
 @import 'main/main';
 @import '../components/footer/footer';
 @import '../components/modal/modal';

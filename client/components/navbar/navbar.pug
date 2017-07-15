@@ -14,9 +14,10 @@ div.navbar.navbar-default.navbar-static-top
         li(ng-repeat='item in $ctrl.menu', ui-sref-active='active')
           a(ui-sref='{{item.state}}') {{item.title}}
 
-        li(ng-show='$ctrl.isAdmin()', ui-sref-active='active')
+        li(ng-show='$ctrl.isAdmin', ui-sref-active='active')
           a(ui-sref='admin') Admin
-        li(ng-show='$ctrl.isDiputado()', ui-sref-active='active')
+
+        li(ng-show='$ctrl.isDiputado', ui-sref-active='active')
           a(ui-sref='diputados') Area Diputados
 
       ul.nav.navbar-nav.navbar-right
