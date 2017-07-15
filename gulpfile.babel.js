@@ -486,7 +486,6 @@ gulp.task('clean:dist', () => del([`${paths.dist}/!(.git*|.openshift|Procfile)**
 gulp.task('build:images', () => {
     return gulp.src(paths.client.images)
         .pipe(plugins.imagemin([
-            plugins.imagemin.optipng({optimizationLevel: 5}),
             plugins.imagemin.jpegtran({progressive: true}),
             plugins.imagemin.gifsicle({interlaced: true}),
             plugins.imagemin.svgo({plugins: [{removeViewBox: false}]})
