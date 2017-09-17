@@ -462,7 +462,6 @@ gulp.task('test:client', done => {
 gulp.task('build', cb => {
     runSequence(
         [
-            'clean:dist',
             'clean:tmp'
         ],
         'inject',
@@ -481,7 +480,7 @@ gulp.task('build', cb => {
         cb);
 });
 
-gulp.task('clean:dist', () => del([`${paths.dist}/!(.git*|.openshift|Procfile)**`], {dot: true}));
+// gulp.task('clean:dist', () => del([`${paths.dist}/!(.git*|.openshift|Procfile)**`], {dot: true}));
 
 gulp.task('build:images', () => {
     return gulp.src(paths.client.images)
